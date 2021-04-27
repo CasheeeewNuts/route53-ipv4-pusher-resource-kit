@@ -1,5 +1,7 @@
 import {APIGatewayProxyEvent, APIGatewayEventRequestContext, APIGatewayProxyResult} from "aws-lambda";
 import {changeARecord} from "./change-a-record";
+import * as AWS from "aws-sdk"
+
 
 export async function handler(event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext): Promise<APIGatewayProxyResult> {
     try {
@@ -24,11 +26,15 @@ export async function handler(event: APIGatewayProxyEvent, context: APIGatewayEv
 
         if (HOSTED_ZONE_ID == null) throw 'Error: target hosted zone id is undefined'
 
-        return await changeARecord(clientIp, domainName, HOSTED_ZONE_ID)
-            .then(() => ({
-                statusCode: 200,
-                body: ''
-            }))
+        return await changeARecord({
+            ip: clientIp,
+            domainName: domainName,
+            hostedZoneId: HOSTED_ZONE_ID,
+            route53: new AWS.Route53()
+        }).then(() => ({
+            statusCode: 200,
+            body: ''
+        }))
 
     } catch (e) {
         return {

@@ -1,7 +1,13 @@
 import * as AWS from "aws-sdk"
 
-export async function changeARecord(ip: string, domainName: string, hostedZoneId: string): Promise<AWS.Route53.ChangeResourceRecordSetsResponse> {
-    const route53 = new AWS.Route53()
+type Props = {
+    ip: string,
+    domainName: string,
+    hostedZoneId: string,
+    route53: AWS.Route53
+}
+
+export async function changeARecord({ip, domainName, hostedZoneId, route53}: Props): Promise<AWS.Route53.ChangeResourceRecordSetsResponse> {
     const params: AWS.Route53.ChangeResourceRecordSetsRequest = {
         ChangeBatch: {
             Changes: [{
