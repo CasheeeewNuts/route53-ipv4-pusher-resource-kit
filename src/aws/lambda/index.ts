@@ -1,6 +1,6 @@
 import {APIGatewayProxyEvent, APIGatewayEventRequestContext, APIGatewayProxyResult} from "aws-lambda";
-import {changeARecord} from "./change-a-record";
 import * as AWS from "aws-sdk"
+import {changeARecord} from "./change-a-record";
 
 
 export async function handler(event: APIGatewayProxyEvent, context: APIGatewayEventRequestContext): Promise<APIGatewayProxyResult> {
@@ -21,7 +21,7 @@ export async function handler(event: APIGatewayProxyEvent, context: APIGatewayEv
             }
         }
 
-        const {sourceIp: clientIp} = context.identity
+        const {sourceIp: clientIp} = event.requestContext.identity
         const {HOSTED_ZONE_ID} = process.env
 
         if (HOSTED_ZONE_ID == null) throw 'Error: target hosted zone id is undefined'
