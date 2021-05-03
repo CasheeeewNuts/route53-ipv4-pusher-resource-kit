@@ -2,6 +2,7 @@ import * as cdk from '@aws-cdk/core';
 import * as apiGateway from "@aws-cdk/aws-apigateway"
 import {NodejsFunction} from "@aws-cdk/aws-lambda-nodejs"
 import "dotenv/config"
+import {createExecutionRole} from "./route53-ipv4-pusher-role";
 
 export class Route53Ipv4PusherResourceKitStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -15,7 +16,8 @@ export class Route53Ipv4PusherResourceKitStack extends cdk.Stack {
       entry: "src/aws/lambda/index.ts",
       environment: {
         HOSTED_ZONE_ID: HOSTED_ZONE_ID
-      }
+      },
+      role: createExecutionRole(this)
     })
 
     const gateway = new apiGateway.RestApi(this, 'ipv4PusherGateway')
