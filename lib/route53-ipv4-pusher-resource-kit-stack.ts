@@ -21,8 +21,23 @@ export class Route53Ipv4PusherResourceKitStack extends cdk.Stack {
             role: createExecutionRole(this)
         })
 
-        const gateway: apiGateway.RestApi = new apiGateway.RestApi(this, 'ipv4PusherGateway')
+        const gateway: apiGateway.RestApi = new apiGateway.RestApi(this, 'PusherGateway')
+        const apiKey: apiGateway.ApiKey = new apiGateway.ApiKey(this, 'PusherAPIKey', {
+            apiKeyName: 'PusherAPIKey',
+            enabled: true
+        })
 
-        gateway.root.addMethod('POST', new apiGateway.LambdaIntegration(lambdaFunction))
+        gateway.addUsagePlan('PusherUsagePlan', {
+            name: 'PusherUsagePlan',
+            apiKey: apiKey,
+            throttle: {
+                rateLimit: 10,
+                burstLimit: 100
+            }
+        }).addApiStage({stage: gateway.deploymentStage})
+
+        gateway.root.addMethod('POST', new apiGateway.LambdaIntegration(lambdaFunction), {
+            apiKeyRequired: true
+        })
     }
 }
