@@ -1,6 +1,11 @@
-*.ts
 !*.d.ts
 
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# test files
+./test/*
+
+# environment file
+.env
