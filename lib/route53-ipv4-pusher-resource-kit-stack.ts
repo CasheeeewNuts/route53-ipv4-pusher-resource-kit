@@ -13,7 +13,7 @@ export class Route53Ipv4PusherResourceKitStack extends cdk.Stack {
 
         if (HOSTED_ZONE_ID == null) throw 'HOSTED_ZONE_ID environment variable was not set'
 
-        const lambdaFunction: NodejsFunction = new NodejsFunction(this, 'ipv4PushFunction', {
+        const lambdaFunction: NodejsFunction = new NodejsFunction(this, 'Pusher', {
             entry: "src/aws/lambda/index.ts",
             environment: {
                 HOSTED_ZONE_ID: HOSTED_ZONE_ID
