@@ -1,14 +1,25 @@
-# Welcome to your CDK TypeScript project!
+# Route53-IPv4-Pusher-Resource-Kit
 
-This is a blank project for TypeScript development with CDK.
+It is defined in TypeScript + AWS CDK, including IAM roles, Lambda, API Gateway  
+for Route53-IPv4-Pusher
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Usage
+### !!! Required configure your AWS account in AWS CLI !!!
+clone this repository, execute next command
+```shell
+npm i
+cp .env.example .env
+vi .env
+# HOSTED_ZONE_ID=your_target_hosted_zone_id
+```
+or
+```shell
+echo HOSTED_ZONE_ID=your_target_hosted_zone_id > .env
+```
 
-## Useful commands
+then
+```shell
+cdk deploy # create resources to your AWS account
+```
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+
