@@ -1,0 +1,379 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Empty Stack 1`] = `
+Object {
+  "Outputs": Object {
+    "PusherGatewayEndpoint1EA518AB": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "PusherGatewayFC59531C",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "PusherGatewayDeploymentStageprodE2010B15",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "AssetParameters9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0ArtifactHash4805977F": Object {
+      "Description": "Artifact hash for asset \\"9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0\\"",
+      "Type": "String",
+    },
+    "AssetParameters9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0S3Bucket596A2F1F": Object {
+      "Description": "S3 bucket for asset \\"9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0\\"",
+      "Type": "String",
+    },
+    "AssetParameters9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0S3VersionKey859136B7": Object {
+      "Description": "S3 key for asset version \\"9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "Pusher88236571": Object {
+      "DependsOn": Array [
+        "PusherRole8E010D85",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0S3Bucket596A2F1F",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0S3VersionKey859136B7",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters9ea5baf62118a1fc9ca150626577739b8d4ec7614e23becc0d9977789e066dc0S3VersionKey859136B7",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "HOSTED_ZONE_ID": "Z0741428OZQHH34GVMX5",
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "PusherRole8E010D85",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "PusherAPIKeyA1B1F4D3": Object {
+      "Properties": Object {
+        "Enabled": true,
+        "Name": "PusherAPIKey",
+      },
+      "Type": "AWS::ApiGateway::ApiKey",
+    },
+    "PusherGatewayAccountAE92B78C": Object {
+      "DependsOn": Array [
+        "PusherGatewayFC59531C",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "PusherGatewayCloudWatchRole7B75984B",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "PusherGatewayCloudWatchRole7B75984B": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "PusherGatewayDeployment6501F1CCc220d6e5a451ab9a1f53758b228a0eb1": Object {
+      "DependsOn": Array [
+        "PusherGatewayPOSTDFE871D3",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "PusherGatewayFC59531C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "PusherGatewayDeploymentStageprodE2010B15": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "PusherGatewayDeployment6501F1CCc220d6e5a451ab9a1f53758b228a0eb1",
+        },
+        "RestApiId": Object {
+          "Ref": "PusherGatewayFC59531C",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "PusherGatewayFC59531C": Object {
+      "Properties": Object {
+        "Name": "PusherGateway",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "PusherGatewayPOSTApiPermissionMyTestStackPusherGateway2E9D8110POST1250AA36": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "Pusher88236571",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "PusherGatewayFC59531C",
+              },
+              "/",
+              Object {
+                "Ref": "PusherGatewayDeploymentStageprodE2010B15",
+              },
+              "/POST/",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "PusherGatewayPOSTApiPermissionTestMyTestStackPusherGateway2E9D8110POST7362ABDF": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "Pusher88236571",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "PusherGatewayFC59531C",
+              },
+              "/test-invoke-stage/POST/",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "PusherGatewayPOSTDFE871D3": Object {
+      "Properties": Object {
+        "ApiKeyRequired": true,
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Pusher88236571",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Fn::GetAtt": Array [
+            "PusherGatewayFC59531C",
+            "RootResourceId",
+          ],
+        },
+        "RestApiId": Object {
+          "Ref": "PusherGatewayFC59531C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "PusherGatewayPusherUsagePlanDA6AB6DF": Object {
+      "Properties": Object {
+        "ApiStages": Array [
+          Object {
+            "ApiId": Object {
+              "Ref": "PusherGatewayFC59531C",
+            },
+            "Stage": Object {
+              "Ref": "PusherGatewayDeploymentStageprodE2010B15",
+            },
+            "Throttle": Object {},
+          },
+        ],
+        "Throttle": Object {
+          "BurstLimit": 100,
+          "RateLimit": 10,
+        },
+        "UsagePlanName": "PusherUsagePlan",
+      },
+      "Type": "AWS::ApiGateway::UsagePlan",
+    },
+    "PusherGatewayPusherUsagePlanUsagePlanKeyResource0424C49E": Object {
+      "Properties": Object {
+        "KeyId": Object {
+          "Ref": "PusherAPIKeyA1B1F4D3",
+        },
+        "KeyType": "API_KEY",
+        "UsagePlanId": Object {
+          "Ref": "PusherGatewayPusherUsagePlanDA6AB6DF",
+        },
+      },
+      "Type": "AWS::ApiGateway::UsagePlanKey",
+    },
+    "PusherRole8E010D85": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/AmazonRoute53FullAccess",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+  },
+}
+`;
